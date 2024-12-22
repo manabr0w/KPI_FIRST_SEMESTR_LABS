@@ -12,9 +12,15 @@ function asyncFilter(arr, asyncCallback, finalCallback) {
         const elapsed = Date.now() - start;
         const delay = debounceTime - elapsed > 0 ? debounceTime - elapsed : 0;
 
-
-    })
+        setTimeout(() => {
+            if (keep) results.push(item);
+            completed++;
+            if (completed === arr.length) {
+                finalCallback(null, results);
+            }
+        }, delay);
+    });
+    });
 }
-
 
 module.exports =  asyncFilter ;
