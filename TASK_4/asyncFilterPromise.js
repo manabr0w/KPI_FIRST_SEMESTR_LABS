@@ -1,4 +1,5 @@
 function asyncFilter(arr, asyncCallback, debounceTime = 0, abortSignal) {
+
     const results = new Array(arr.length);
 
     return Promise.all(
@@ -29,10 +30,7 @@ function asyncFilter(arr, asyncCallback, debounceTime = 0, abortSignal) {
                 });
             });
         })
-    ).then(() => results.filter(x => x !== undefined)).catch((error) => {
-        console.error('Processing failed:', error);
-        throw error;
-    });
+    ).then(() => results.filter(x => x !== undefined));
 }
 
 module.exports = asyncFilter;
