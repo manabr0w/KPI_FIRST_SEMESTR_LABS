@@ -1,4 +1,4 @@
-function asyncFilterPromise(arr, asyncCallback, debounceTime = 0, abortSignal) {
+function abortController(arr, asyncCallback, debounceTime = 0, abortSignal) {
     const results = new Array(arr.length);
 
     return Promise.all(
@@ -32,4 +32,4 @@ function asyncFilterPromise(arr, asyncCallback, debounceTime = 0, abortSignal) {
     ).then(() => results.filter(x => x !== undefined));
 }
 
-module.exports = asyncFilterPromise;
+module.exports = abortController;
