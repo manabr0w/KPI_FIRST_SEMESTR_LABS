@@ -1,4 +1,4 @@
-const abortController = require('./abortController');
+const asyncFilterPromise = require('./asyncFilterPromise');
 
 const arr1 = [1, 2, 3, 4, 5];
 const arr2 = [10, 15, 20, 25, 30];
@@ -22,7 +22,7 @@ const runTestWithAbort = async (arr, description, abortTimeout) => {
     }, abortTimeout);
 
     try {
-        const filtered = await abortController(arr, asyncCallback, 50, signal);
+        const filtered = await asyncFilterPromise(arr, asyncCallback, 50, signal);
         console.log(`Filtered array for "${description}":`, filtered);
     } catch (error) {
         console.error(`Error for "${description}":`, error.message);
