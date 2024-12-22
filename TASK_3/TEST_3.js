@@ -6,3 +6,19 @@ const asyncCallback = (item, cb) => {
         cb(null, item % 2 === 0);
     }, 100);
 };
+
+const controller = new AbortController();
+const { signal } = controller;
+
+setTimeout(() => {
+    controller.abort();
+}, 150);
+
+(async () => {
+    try {
+        const filtered = await asyncFilterPromise(arr, asyncCallback, 50, signal);
+        console.log("Filtered array:", filtered);
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
+})();
