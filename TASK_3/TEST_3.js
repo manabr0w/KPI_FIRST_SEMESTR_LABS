@@ -11,6 +11,7 @@ const asyncCallback = (item, cb) => {
 
 const runTestWithAbort = async (arr, description, abortTimeout) => {
     console.log(`Running test: ${description}`);
+    console.time(`Execution time for "${description}"`);
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -25,6 +26,8 @@ const runTestWithAbort = async (arr, description, abortTimeout) => {
         console.log(`Filtered array for "${description}":`, filtered);
     } catch (error) {
         console.error(`Error for "${description}":`, error.message);
+    } finally {
+        console.timeEnd(`Execution time for "${description}"`);
     }
 };
 
