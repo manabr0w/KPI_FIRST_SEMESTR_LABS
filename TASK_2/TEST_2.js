@@ -2,7 +2,7 @@ const asyncFilterPromise = require('./asyncFilterPromise');
 
 const arr1 = [1, 2, 3, 4, 5];
 const arr2 = [10, 15, 20, 25, 30];
-const arr3 = [100, 200, 300, 400, 500];
+const arr3 = [100, 200, 300, 555, 500];
 
 const asyncCallback = (item, cb) => {
     setTimeout(() => {
