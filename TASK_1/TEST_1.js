@@ -6,3 +6,17 @@ function asyncCheckIfEven(number, callback) {
         callback(null, number % 2 === 0);
     }, Math.random() * 500);
 }
+
+const numbers = [1, 2, 3, 4, -1, 6];
+
+asyncFilter(
+    numbers,
+    asyncCheckIfEven,
+    (err, results) => {
+        if (err) {
+            console.error("Error:", err.message);
+        } else {
+            console.log("Filtered Results:", results);
+        }
+    }
+);
