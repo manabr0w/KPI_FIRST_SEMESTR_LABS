@@ -15,3 +15,6 @@ function asyncFilter(arr, asyncCallback, finalCallback) {
         });
     });
 }
+
+
+module.exports =  asyncFilter ;
