@@ -1,8 +1,5 @@
 const asyncFilter = require('./asyncFilterPromise');
 
-
-const asyncFilter = require('./asyncFilterPromise');
-
 async function asyncCallback(item, callback) {
     setTimeout(() => {
         if (item % 5 === 0) {
@@ -14,6 +11,8 @@ async function asyncCallback(item, callback) {
 }
 
 async function testAsyncFilter() {
+    console.time('Test 1 execution time');
+
     const dataset = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const result = await asyncFilter(dataset, asyncCallback);
 
@@ -26,9 +25,13 @@ async function testAsyncFilter() {
     } else {
         console.log("Test 1 failed!\n");
     }
+
+    console.timeEnd('Test 1 execution time');
 }
 
 async function testAbort() {
+    console.time('Test 2 execution time');
+
     const dataset = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const abortSignal = new AbortController();
 
@@ -47,9 +50,13 @@ async function testAbort() {
             console.log("Test 2 failed!\n");
         }
     }
+
+    console.timeEnd('Test 2 execution time');
 }
 
 async function testDebounce() {
+    console.time('Test 3 execution time');
+
     const dataset = [1, 2, 3, 4, 5];
     const result = await asyncFilter(dataset, asyncCallback, 500);
 
@@ -62,6 +69,8 @@ async function testDebounce() {
     } else {
         console.log("Test 3 failed!\n");
     }
+
+    console.timeEnd('Test 3 execution time');
 }
 
 async function runTests() {
