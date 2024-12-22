@@ -19,6 +19,10 @@ function asyncFilterPromise(arr, asyncCallback, debounceTime = 0, abortSignal) {
                     const delay = debounceTime - elapsed > 0 ? debounceTime - elapsed : 0;
 
                     setTimeout(() => {
+                        if (abortSignal?.aborted) {
+                            return reject(new Error('Operation aborted'));
+                        }
+
                         if (keep) results[index] = item;
                         resolve();
                     }, delay);
