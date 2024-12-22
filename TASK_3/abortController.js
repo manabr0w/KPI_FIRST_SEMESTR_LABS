@@ -31,3 +31,5 @@ function asyncFilterPromise(arr, asyncCallback, debounceTime = 0, abortSignal) {
         })
     ).then(() => results.filter(x => x !== undefined));
 }
+
+module.exports = asyncFilterPromise;
