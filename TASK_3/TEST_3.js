@@ -1,24 +1,34 @@
 const asyncFilterPromise = require('./asyncFilterPromise');
 
-const arr = [1, 2, 3, 4, 5];
+const arr1 = [1, 2, 3, 4, 5];
+const arr2 = [10, 15, 20, 25, 30];
+
 const asyncCallback = (item, cb) => {
     setTimeout(() => {
         cb(null, item % 2 === 0);
     }, 100);
 };
 
-const controller = new AbortController();
-const { signal } = controller;
+const runTestWithAbort = async (arr, description, abortTimeout) => {
+    console.log(`Running test: ${description}`);
 
-setTimeout(() => {
-    controller.abort();
-}, 150);
+    const controller = new AbortController();
+    const { signal } = controller;
 
-(async () => {
+    setTimeout(() => {
+        controller.abort();
+        console.log(`Test "${description}": Aborted`);
+    }, abortTimeout);
+
     try {
         const filtered = await asyncFilterPromise(arr, asyncCallback, 50, signal);
-        console.log("Filtered array:", filtered);
+        console.log(`Filtered array for "${description}":`, filtered);
     } catch (error) {
-        console.error("Error:", error.message);
+        console.error(`Error for "${description}":`, error.message);
     }
+};
+
+(async () => {
+    await runTestWithAbort(arr1, "Test with small array", 150);
+    await runTestWithAbort(arr2, "Test with medium array", 50);
 })();
