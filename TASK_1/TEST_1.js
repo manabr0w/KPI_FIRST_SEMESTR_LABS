@@ -16,7 +16,7 @@ asyncFilter(
         if (err) {
             console.error("Error:", err.message);
         } else {
-            console.log("Filtered Results with Debounce:", results);
+            console.log("Filtered Results:", results);
         }
     },
     500
