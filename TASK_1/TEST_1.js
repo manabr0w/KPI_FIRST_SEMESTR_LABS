@@ -9,10 +9,12 @@ function asyncCheckIfEven(number, callback) {
 
 
 const numbers1 = [1, 2, 3, 4, 5, 6];
+console.time("Test 1 Execution Time");
 asyncFilter(
     numbers1,
     asyncCheckIfEven,
     (err, results) => {
+        console.timeEnd("Test 1 Execution Time");
         if (err) {
             console.error("Test 1 Error:", err.message);
         } else {
@@ -22,12 +24,13 @@ asyncFilter(
     500
 );
 
-
 const numbers2 = [-1, -2, -3, -4, -5, -6];
+console.time("Test 2 Execution Time");
 asyncFilter(
     numbers2,
     asyncCheckIfEven,
     (err, results) => {
+        console.timeEnd("Test 2 Execution Time");
         if (err) {
             console.error("Test 2 Error:", err.message);
         } else {
@@ -38,10 +41,12 @@ asyncFilter(
 );
 
 const numbers3 = [0, 1, 2, 3, 4, 5, 6];
+console.time("Test 3 Execution Time");
 asyncFilter(
     numbers3,
     asyncCheckIfEven,
     (err, results) => {
+        console.timeEnd("Test 3 Execution Time");
         if (err) {
             console.error("Test 3 Error:", err.message);
         } else {
