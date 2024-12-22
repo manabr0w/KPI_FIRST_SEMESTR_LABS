@@ -8,10 +8,11 @@ const asyncCallback = (item, cb) => {
     }, 100);
 };
 
-asyncFilterPromise(arr, asyncCallback, 50)
-    .then(filtered => {
-        console.log("Filtered array:", filtered);
-    })
-    .catch(err => {
-        console.error("Error:", err);
-    });
+(async () => {
+    try {
+        const filtered = await asyncFilterPromise(arr, asyncCallback, 50);
+        console.log("Filtered array with async/await:", filtered);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+})();
