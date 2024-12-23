@@ -7,7 +7,7 @@ class CancellableMessageBus extends EventEmitter {
     }
 
     sendMessage(event, data, abortSignal) {
-        if (abortSignal?.aborted) {
+        if (abortSignal && abortSignal.aborted) {
             console.log(`[CancellableMessageBus] Message aborted: ${event}`);
             return;
         }
