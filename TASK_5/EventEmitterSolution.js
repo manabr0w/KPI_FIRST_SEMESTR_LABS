@@ -43,7 +43,7 @@ class Entity {
 
     receive(event, callback) {
         console.log(`[${this.name}] Listening for event: ${event}`);
-        this.messageBus.receiveMessage(event, callback);
+        this.messageBus.on(event, callback);
     }
 }
 
