@@ -1,4 +1,4 @@
-const MessageBus = require('./MessageBus');
+const MessageBus = require('./EventEmitterSolution');
 const Entity = require('./Entity');
 
 const messageBus = new MessageBus();
