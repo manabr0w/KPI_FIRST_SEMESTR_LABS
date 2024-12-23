@@ -1,13 +1,20 @@
-const EventEmitter = require('events');
+const MessageBus = require('./MessageBus');
 
-class MessageBus extends EventEmitter {
-    sendMessage(event, data) {
-        this.emit(event, data);
+class Entity {
+    constructor(name, messageBus) {
+        this.name = name;
+        this.messageBus = messageBus;
     }
 
-    receiveMessage(event, callback) {
-        this.on(event, callback);
+    send(event, data) {
+        console.log(`[${this.name}] Sending event: ${event}`, data);
+        this.messageBus.sendMessage(event, data);
+    }
+
+    receive(event, callback) {
+        console.log(`[${this.name}] Listening for event: ${event}`);
+        this.messageBus.receiveMessage(event, callback);
     }
 }
 
-module.exports = MessageBus;
+module.exports = Entity;
