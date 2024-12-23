@@ -1,7 +1,6 @@
-const MessageBus = require('./EventEmitterSolution');
-const Entity = require('./Entity');
+const { CancellableMessageBus, Entity } = require('./EventEmitterSolution');
 
-const messageBus = new MessageBus();
+const messageBus = new CancellableMessageBus();
 
 const entityA = new Entity('EntityA', messageBus);
 const entityB = new Entity('EntityB', messageBus);
