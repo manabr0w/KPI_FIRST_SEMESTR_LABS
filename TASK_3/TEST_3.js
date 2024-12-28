@@ -1,37 +1,68 @@
-const asyncFilterPromise = require('./asyncFilterPromise');
+const asyncFilter = require('./asyncFilter'); // Імпортуємо вашу функцію
 
-const arr1 = [1, 2, 3, 4, 5];
-const arr2 = [10, 15, 20, 25, 30];
 
-const asyncCallback = (item, cb) => {
-    setTimeout(() => {
-        cb(null, item % 2 === 0);
-    }, 100);
-};
 
-const runTestWithAbort = async (arr, description, abortTimeout) => {
-    console.log(`Running test: ${description}`);
-    console.time(`Execution time for "${description}"`);
+const asyncCheckEven = (value, signal) => {
+    let timeout;
+    return new Promise((resolve, reject) => {
+        const delay = Math.floor(Math.random() * 2500) + 500;
+        console.log(`Processing ${value} with delay ${delay}ms`);
 
-    const controller = new AbortController();
-    const { signal } = controller;
+        timeout = setTimeout(() => {
+            if (typeof value !== 'number') {
+                reject(new Error(`${value} is not a number!`));
+            } else {
+                resolve(value % 2 === 0);
+            }
+        }, delay);
 
-    setTimeout(() => {
-        controller.abort();
-        console.log(`Test "${description}": Aborted`);
-    }, abortTimeout);
+        const abortHandler = () => {
+            clearTimeout(timeout);
+            reject(new Error('AbortError'));
+        };
 
-    try {
-        const filtered = await asyncFilterPromise(arr, asyncCallback, 50, signal);
-        console.log(`Filtered array for "${description}":`, filtered);
-    } catch (error) {
-        console.error(`Error for "${description}":`, error.message);
-    } finally {
-        console.timeEnd(`Execution time for "${description}"`);
-    }
+        if (signal) {
+            signal.addEventListener('abort', abortHandler);
+        }
+    });
 };
 
 (async () => {
-    await runTestWithAbort(arr1, "Test with small array", 150);
-    await runTestWithAbort(arr2, "Test with medium array", 50);
+    console.log("\n=== Test 1: Фільтрація без скасування ===");
+    const numbers1 = [1, 2, 5, 123, 3, 9, 0];
+    try {
+        const result1 = await asyncFilter(numbers1, asyncCheckEven, null, 100);
+        console.log("Результат фільтрації:", result1);
+    } catch (err) {
+        console.error("Помилка:", err.message);
+
+    }
+
+    console.log("\n=== Test 2: Скасування через AbortController ===");
+    const numbers2 = [1, 2, 5, 123, 3, 9, 0];
+    const controller2 = new AbortController();
+    const signal2 = controller2.signal;
+    setTimeout(() => {
+        console.log("Абортую операції...");
+        controller2.abort();
+    }, 2000);
+    try {
+        const result2 = await asyncFilter(numbers2, asyncCheckEven, signal2, 100);
+        console.log("Результат фільтрації:", result2);
+    } catch (err) {
+        if (err.message === 'AbortError') {
+            console.error("Операції було скасовано.");
+        } else {
+            console.error("Помилка:", err.message);
+        }
+    }
+
+    console.log("\n=== Test 3: Обробка помилок ===");
+    const numbers3 = [1, "two", 3, 4, "five"];
+    try {
+        const result3 = await asyncFilter(numbers3, asyncCheckEven, null, 100);
+        console.log("Результат фільтрації:", result3);
+    } catch (err) {
+        console.error("Помилка:", err.message);
+    }
 })();
