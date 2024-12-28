@@ -1,6 +1,7 @@
 const asyncFilter = require('./asyncFilter'); // Імпортуємо вашу функцію
 
 
+
 const asyncCheckEven = (value, signal) => {
     let timeout;
     return new Promise((resolve, reject) => {
@@ -34,6 +35,7 @@ const asyncCheckEven = (value, signal) => {
         console.log("Результат фільтрації:", result1);
     } catch (err) {
         console.error("Помилка:", err.message);
+
     }
 
     console.log("\n=== Test 2: Скасування через AbortController ===");
