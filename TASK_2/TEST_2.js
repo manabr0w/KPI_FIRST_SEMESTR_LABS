@@ -1,13 +1,16 @@
-const asyncFilterPromise = require('./asyncFilterPromise');
+const asyncFilter = require('./asyncFilter');
 
 const arr1 = [1, 2, 3, 4, 5];
 const arr2 = [10, 15, 20, 25, 30];
 const arr3 = [100, 200, 300, 555, 500];
 
-const asyncCallback = (item, cb) => {
-    setTimeout(() => {
-        cb(null, item % 2 === 0);
-    }, Math.random() * 100);
+
+const asyncCallback = async (item) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(item % 2 === 0);
+        }, Math.random() * 100);
+    });
 };
 
 const runTest = async (arr, debounceTime, description) => {
@@ -15,7 +18,7 @@ const runTest = async (arr, debounceTime, description) => {
     const start = Date.now();
 
     try {
-        const filtered = await asyncFilterPromise(arr, asyncCallback, debounceTime);
+        const filtered = await asyncFilter(arr, asyncCallback, debounceTime);
         console.log(`Filtered array:`, filtered);
     } catch (error) {
         console.error("Error:", error);
